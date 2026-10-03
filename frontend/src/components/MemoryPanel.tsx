@@ -48,7 +48,7 @@ export function MemoryPanel({
             <Badge tone="info">{zh("CUSTOMER STATE")}</Badge>
           </div>
           <p className="mt-1 text-xs leading-5 text-muted">{zh("User-specific preferences and bounded context for contextual continuity.")}</p>
-          <div className="mt-2 text-[11px] text-muted">{zh(retrievedCount)}{" " + zhFragment("item") + ""}{zh(retrievedCount === 1 ? "" : "s")}{" " + zhFragment("used in run") + ""}</div>
+          <div className="mt-2 text-[11px] text-muted">{zh(retrievedCount)}{" " + zhFragment("item") + ""}{zhFragment(retrievedCount === 1 ? "" : "s")}{" " + zhFragment("used in run") + ""}</div>
         </div>
         <div className="context-summary mt-3">
           <div><span className="field-label">{zh("Retrieved")}</span><div className="mt-1 text-xs text-main">{zh(retrieved ? (zhFragment("✓ ") + (zh(retrievedCount)) + zhFragment("")) : "Not used")}</div></div>
