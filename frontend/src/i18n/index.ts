@@ -8,7 +8,8 @@ export function zh<T>(value: T): T {
   if (typeof value !== "string") return value;
   // A plural suffix is a template fragment, never a standalone unit or value.
   if (value === "s") return value;
-  const translated = dictionary[value] ?? dictionary[value.replace(/_/g, " ")] ?? dictionary[value.toLowerCase()];
+  const normalized = value.toLowerCase().replace(/_/g, " ");
+  const translated = dictionary[value] ?? dictionary[normalized] ?? dictionary[normalized.replace(/\s+/g, "_")];
   return (translated ?? value) as T;
 }
 

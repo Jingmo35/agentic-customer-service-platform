@@ -4,7 +4,8 @@
 
 ## 现在可用的写法
 
-**客服 Agent 平台｜开源复现与中文化**  
+**客服 Agent 平台｜开源复现与中文化**
+
 技术栈：Python、FastAPI、LangGraph、PostgreSQL、Qdrant、React、TypeScript、Docker Compose
 
 - 基于开源客服 Agent 工程参考实现完成本地部署和演示环境配置，启动前后端、数据库与向量检索服务，完成健康检查与前端访问验证。

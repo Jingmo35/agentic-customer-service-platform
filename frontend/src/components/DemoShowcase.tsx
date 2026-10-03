@@ -30,7 +30,7 @@ type ShowcaseStage = {
 
 function humanize(value: string | null | undefined) {
   if (!value) return "Not recorded";
-  return value.replace(/_/g, " ").replace(/\b\w/g, (character) => character.toUpperCase());
+  return zh(value.replace(/_/g, " ").replace(/\b\w/g, (character) => character.toUpperCase()));
 }
 
 function stageTone(status: ShowcaseStageStatus): "success" | "warning" | "danger" | "neutral" {
@@ -63,7 +63,7 @@ function runStages(scenario: DemoScenario): ShowcaseStage[] {
 
   return [
     { id: "request", label: "Request received", status: "completed", evidence: "Customer message available", authority: "None", explanation: "The bounded customer request is represented in the scenario transcript." },
-    { id: "context", label: "Context enrichment", status: memoryAvailable ? "completed" : "unavailable", evidence: memoryAvailable ? (zhFragment("") + zh(run.memory.items_used ?? run.memory.retrieved_count ?? run.memory.item_count) + zhFragment(" memory item") + zh((run.memory.items_used ?? run.memory.retrieved_count ?? run.memory.item_count) === 1 ? "" : "s") + zhFragment(" retrieved")) : "No memory recorded", authority: "Context only", explanation: "Memory informs continuity and personalization without granting authority." },
+    { id: "context", label: "Context enrichment", status: memoryAvailable ? "completed" : "unavailable", evidence: memoryAvailable ? (zhFragment("") + zh(run.memory.items_used ?? run.memory.retrieved_count ?? run.memory.item_count) + zhFragment(" memory item") + zhFragment((run.memory.items_used ?? run.memory.retrieved_count ?? run.memory.item_count) === 1 ? "" : "s") + zhFragment(" retrieved")) : "No memory recorded", authority: "Context only", explanation: "Memory informs continuity and personalization without granting authority." },
     { id: "grounding", label: "Knowledge grounding", status: ragAvailable ? "completed" : "unavailable", evidence: ragAvailable ? (zhFragment("") + zh(run.rag_documents[0]?.title ?? "Knowledge source") + zhFragment(" · validated")) : "No retrieval evidence recorded", authority: "No execution authority", explanation: "RAG evidence supports grounding and remains non-authoritative." },
     { id: "proposal", label: "Semantic proposal", status: proposalAvailable ? (run.proposal?.validation === "rejected" ? "blocked" : "completed") : "unavailable", evidence: proposalAvailable ? "LLM suggested a structured action" : "No proposal recorded", authority: "Untrusted suggestion", explanation: "Model output is a semantic proposal until deterministic checks complete." },
     { id: "decision", label: "Decision compilation", status: compilerAvailable ? (clarificationRequired ? "waiting" : blocked ? "blocked" : "completed") : "unavailable", evidence: compilerAvailable ? clarificationRequired ? "Clarification required" : `${humanize(run.evidence.compiler.status)}${policy ? (zhFragment(" · policy ") + zh(humanize(policy.outcome)) + zhFragment("")) : ""}` : "No compiler result recorded", authority: "Validation", explanation: clarificationRequired ? "Required information is missing before policy evaluation; clarification is required." : policy ? (policy.reason_codes.length > 0 ? (zhFragment("Policy and validation: ") + zh(policy.reason_codes.map(humanize).join(", ")) + zhFragment(".")) : "Policy and target checks are recorded.") : "Required information is missing before policy evaluation.", },
@@ -130,9 +130,9 @@ function conversationBoundary(scenario: DemoScenario): ConversationBoundary {
   const clarification = run.request_type === "unclear" || run.evidence.compiler.status === "clarification_required" || run.evidence.target_validation.status === "missing_required_information";
   const waiting = run.status === "waiting_confirmation" || run.evidence.write_outcome.status === "pending_confirmation";
   const denied = run.evidence.write_outcome.status === "blocked" || policy?.outcome === "deny";
-  const evidence = (zhFragment("") + zh(scenario.memory_evidence.length + run.rag_documents.length + (run.proposal ? 1 : 0)) + zhFragment(" bounded source") + zh(scenario.memory_evidence.length + run.rag_documents.length + (run.proposal ? 1 : 0) === 1 ? "" : "s") + zhFragment(""));
+  const evidence = (zhFragment("") + zh(scenario.memory_evidence.length + run.rag_documents.length + (run.proposal ? 1 : 0)) + zhFragment(" bounded source") + zhFragment(scenario.memory_evidence.length + run.rag_documents.length + (run.proposal ? 1 : 0) === 1 ? "" : "s") + zhFragment(""));
   if (clarification) return { outcome: "Clarification required", decision: "Clarification required", execution: "Not attempted", authority: "Not authorized", evidence, tone: "warning" };
-  if (waiting) return { outcome: "Awaiting confirmation", decision: humanize(policy?.outcome ?? "require_confirmation"), execution: "Awaiting confirmation", authority: "Confirmation required", evidence: (zhFragment("") + zh(evidence) + zhFragment(" · ") + zh(items) + zhFragment(" memory item") + zh(items === 1 ? "" : "s") + zhFragment(" available")), tone: "warning" };
+  if (waiting) return { outcome: "Awaiting confirmation", decision: humanize(policy?.outcome ?? "require_confirmation"), execution: "Awaiting confirmation", authority: "Confirmation required", evidence: (zhFragment("") + zh(evidence) + zhFragment(" · ") + zh(items) + zhFragment(" memory item") + zhFragment(items === 1 ? "" : "s") + zhFragment(" available")), tone: "warning" };
   if (denied) return { outcome: "Prevented", decision: "Deny", execution: "Prevented", authority: "Not authorized", evidence, tone: "danger" };
   return { outcome: humanize(run.status), decision: humanize(policy?.outcome ?? run.evidence.compiler.status), execution: humanize(run.evidence.write_outcome.status), authority: "Not recorded", evidence, tone: "neutral" };
 }

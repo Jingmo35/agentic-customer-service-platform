@@ -53,6 +53,6 @@ docker compose up --build --detach --no-deps frontend
 
 - [个人 Fork](https://github.com/Jingmo35/agentic-customer-service-platform) 保留上游来源与 MIT 许可证。
 - [修改前备份分支](https://github.com/Jingmo35/agentic-customer-service-platform/tree/backup/pre-zh-cn-2026-10-03) 固定在 `d2523b027f8280319ba22ec2e0ae1e981c5f79a2`。
-- 本地中文化分支为 `feat/zh-cn-learning`；备份分支不随中文化修改。
+- [中文化分支](https://github.com/Jingmo35/agentic-customer-service-platform/tree/feat/zh-cn-learning) 为 `feat/zh-cn-learning`，已推送至个人 Fork；修改前备份分支不随中文化修改。
 
 `.env`、虚拟环境、依赖目录和 Docker 数据卷没有进入源码备份。此备份是源码版本备份，不是数据库内容或本地密钥备份。

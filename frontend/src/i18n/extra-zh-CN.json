@@ -202,7 +202,7 @@
   "duplicate_blocked": "重复操作已阻止",
   "duplicate blocked": "重复操作已阻止",
   "missing_required_information": "缺少必需信息",
-  "missing required information": "缺少必需信息",
+  "missing required information": "缺少必填信息",
   "create_refund_request": "创建退款申请",
   "create refund request": "创建退款申请",
   "refund_all_orders": "为所有订单退款",
@@ -308,5 +308,14 @@
   "Persistent memory configured; operation not independently probed": "已配置持久化记忆，尚未独立探测其操作",
   "Local evidence store path is not available": "本地证据存储路径不可用",
   "Authentication boundary configured; provider availability not actively probed": "已配置认证边界，尚未主动探测提供方可用性",
-  "OpenTelemetry pipeline configured; export availability not actively probed": "已配置 OpenTelemetry 管道，尚未主动探测导出可用性"
+  "OpenTelemetry pipeline configured; export availability not actively probed": "已配置 OpenTelemetry 管道，尚未主动探测导出可用性",
+  "runtime": "运行时",
+  "refund mutation requires confirmation": "退款操作需要确认",
+  "refund_mutation_requires_confirmation": "退款操作需要确认",
+  "duplicate action": "重复动作",
+  "prompt injection detected": "检测到提示注入",
+  "customer scope mismatch": "客户范围不匹配",
+  "authority_boundary_override_attempt": "尝试绕过执行权限边界",
+  "invalid_target_scope": "目标范围无效",
+  "duplicate_operation_detected": "检测到重复操作"
 }
