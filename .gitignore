@@ -19,6 +19,7 @@ htmlcov/
 artifacts/
 frontend/playwright-report/
 frontend/test-results/
+node_modules/
 /models/
 .qdrant/
 .DS_Store

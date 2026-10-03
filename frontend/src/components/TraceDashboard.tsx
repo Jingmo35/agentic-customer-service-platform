@@ -1,3 +1,4 @@
+import { zh, zhFragment } from "../i18n";
 import { Activity, CheckCircle2, Clock3, Database, FlaskConical, GitBranch, LockKeyhole } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { AgentRun, PlaygroundHistoryItem } from "../types";
@@ -107,11 +108,11 @@ function matchesFilter(run: AgentRun, value: FilterValue): boolean {
 }
 
 function FilterSelect({ label, value, onChange, options }: { label: string; value: FilterValue; onChange: (value: FilterValue) => void; options: Array<[FilterValue, string]> }) {
-  return <label className="trace-filter"><span className="field-label">{label}</span><select className="field-control mt-1.5" value={value} onChange={(event) => onChange(event.target.value as FilterValue)}>{options.map(([optionValue, optionLabel]) => <option value={optionValue} key={optionValue}>{optionLabel}</option>)}</select></label>;
+  return <label className="trace-filter"><span className="field-label">{zh(label)}</span><select className="field-control mt-1.5" value={value} onChange={(event) => onChange(event.target.value as FilterValue)}>{options.map(([optionValue, optionLabel]) => <option value={optionValue} key={optionValue}>{zh(optionLabel)}</option>)}</select></label>;
 }
 
 function durationLabel(run: AgentRun): string {
-  return run.duration_ms > 0 ? `${run.duration_ms.toFixed(0)} ms` : run.run_id.startsWith("demo-") ? "Not applicable" : "Not recorded";
+  return run.duration_ms > 0 ? (zhFragment("") + zh(run.duration_ms.toFixed(0)) + zhFragment(" ms")) : run.run_id.startsWith("demo-") ? "Not applicable" : "Not recorded";
 }
 
 function timestampLabel(run: AgentRun): string {
@@ -120,40 +121,40 @@ function timestampLabel(run: AgentRun): string {
 
 function RunStatus({ run }: { run: AgentRun }) {
   const presentation = statusPresentation(run);
-  return <span title={presentation.description} aria-label={`${presentation.label}: ${presentation.description}`}><StatusIndicator label={presentation.label} tone={presentation.tone} compact /></span>;
+  return <span title={zh(presentation.description)} aria-label={zh((zhFragment("") + (zh(presentation.label)) + zhFragment(": ") + (zh(presentation.description)) + zhFragment("")))}><StatusIndicator label={zh(presentation.label)} tone={presentation.tone} compact /></span>;
 }
 
 function TraceAvailability({ run }: { run: AgentRun }) {
-  return run.trace?.length > 0 ? <Badge tone="success"><span className="inline-flex items-center gap-1.5"><CheckCircle2 size={12} aria-hidden="true" />Available</span></Badge> : <Badge tone="neutral"><span className="inline-flex items-center gap-1.5"><LockKeyhole size={12} aria-hidden="true" />Not recorded</span></Badge>;
+  return run.trace?.length > 0 ? <Badge tone="success"><span className="inline-flex items-center gap-1.5"><CheckCircle2 size={12} aria-hidden="true" />{zh("Available")}</span></Badge> : <Badge tone="neutral"><span className="inline-flex items-center gap-1.5"><LockKeyhole size={12} aria-hidden="true" />{zh("Not recorded")}</span></Badge>;
 }
 
 function RegistryRow({ run, onSelect }: { run: AgentRun; onSelect: (run: AgentRun) => void }) {
   return <tr className="trace-run-row" onClick={() => onSelect(run)} tabIndex={0} onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") onSelect(run); }}>
-    <td className="px-4 py-3 font-mono text-xs text-main">{run.run_id}</td>
-    <td className="px-4 py-3 text-xs text-main"><span className="inline-flex items-center gap-2"><Badge tone={scenarioTone(run)}>{scenarioLabel(run)}</Badge></span></td>
-    <td className="px-4 py-3 font-mono text-xs text-muted">{run.intent || "Not recorded"}</td>
+    <td className="px-4 py-3 font-mono text-xs text-main">{zh(run.run_id)}</td>
+    <td className="px-4 py-3 text-xs text-main"><span className="inline-flex items-center gap-2"><Badge tone={scenarioTone(run)}>{zh(scenarioLabel(run))}</Badge></span></td>
+    <td className="px-4 py-3 font-mono text-xs text-muted">{zh(run.intent || "Not recorded")}</td>
     <td className="px-4 py-3"><RunStatus run={run} /></td>
-    <td className="px-4 py-3 text-xs capitalize text-main">{policyOutcome(run)}</td>
-    <td className="px-4 py-3 text-xs text-muted">{executionOutcome(run)}</td>
-    <td className="px-4 py-3 text-xs text-muted">{authorityOutcome(run)}</td>
-    <td className="px-4 py-3 text-xs text-muted">{durationLabel(run)}</td>
-    <td className="px-4 py-3 text-xs text-muted">{timestampLabel(run)}</td>
+    <td className="px-4 py-3 text-xs capitalize text-main">{zh(policyOutcome(run))}</td>
+    <td className="px-4 py-3 text-xs text-muted">{zh(executionOutcome(run))}</td>
+    <td className="px-4 py-3 text-xs text-muted">{zh(authorityOutcome(run))}</td>
+    <td className="px-4 py-3 text-xs text-muted">{zh(durationLabel(run))}</td>
+    <td className="px-4 py-3 text-xs text-muted">{zh(timestampLabel(run))}</td>
     <td className="px-4 py-3"><TraceAvailability run={run} /></td>
   </tr>;
 }
 
 function RegistryCard({ run, onSelect }: { run: AgentRun; onSelect: (run: AgentRun) => void }) {
   return <button type="button" className="trace-run-card w-full text-left" onClick={() => onSelect(run)}>
-    <div className="flex flex-wrap items-start justify-between gap-3"><div><span className="font-mono text-xs text-main">{run.run_id}</span><div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted"><Badge tone={scenarioTone(run)}>{scenarioLabel(run)}</Badge><span>{humanize(run.intent || run.request_type)}</span></div></div><RunStatus run={run} /></div>
+    <div className="flex flex-wrap items-start justify-between gap-3"><div><span className="font-mono text-xs text-main">{zh(run.run_id)}</span><div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted"><Badge tone={scenarioTone(run)}>{zh(scenarioLabel(run))}</Badge><span>{zh(humanize(run.intent || run.request_type))}</span></div></div><RunStatus run={run} /></div>
     <div className="mt-4 grid grid-cols-2 gap-3">
-      <div><div className="field-label">Scenario</div><div className="mt-1 truncate text-xs text-main">{humanize(run.intent || run.request_type)}</div></div>
-      <div><div className="field-label">Intent</div><div className="mt-1 truncate text-xs text-muted">{humanize(run.intent)}</div></div>
-      <div><div className="field-label">Decision</div><div className="mt-1 truncate text-xs capitalize text-main">{policyOutcome(run)}</div></div>
-      <div><div className="field-label">Execution</div><div className="mt-1 truncate text-xs text-muted">{executionOutcome(run)}</div></div>
-      <div><div className="field-label">Authority</div><div className="mt-1 truncate text-xs text-muted">{authorityOutcome(run)}</div></div>
-      <div><div className="field-label">Duration</div><div className="mt-1 truncate text-xs text-muted">{durationLabel(run)}</div></div>
+      <div><div className="field-label">{zh("Scenario")}</div><div className="mt-1 truncate text-xs text-main">{zh(humanize(run.intent || run.request_type))}</div></div>
+      <div><div className="field-label">{zh("Intent")}</div><div className="mt-1 truncate text-xs text-muted">{zh(humanize(run.intent))}</div></div>
+      <div><div className="field-label">{zh("Decision")}</div><div className="mt-1 truncate text-xs capitalize text-main">{zh(policyOutcome(run))}</div></div>
+      <div><div className="field-label">{zh("Execution")}</div><div className="mt-1 truncate text-xs text-muted">{zh(executionOutcome(run))}</div></div>
+      <div><div className="field-label">{zh("Authority")}</div><div className="mt-1 truncate text-xs text-muted">{zh(authorityOutcome(run))}</div></div>
+      <div><div className="field-label">{zh("Duration")}</div><div className="mt-1 truncate text-xs text-muted">{zh(durationLabel(run))}</div></div>
     </div>
-    <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-border/70 pt-3"><Badge tone="neutral">{sourceLabel(run)}</Badge><span className="text-[11px] text-muted">{timestampLabel(run)}</span></div>
+    <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-border/70 pt-3"><Badge tone="neutral">{zh(sourceLabel(run))}</Badge><span className="text-[11px] text-muted">{zh(timestampLabel(run))}</span></div>
   </button>;
 }
 
@@ -170,16 +171,16 @@ export function TraceDashboard({ runs, recordedRuns = [], playgroundRuns = [], l
   const registry = filtersActive || fixtureOnly ? filteredFixtures : [...fixtureRows, ...observedRows];
 
   return <div className="space-y-5">
-    <section className="release-hero surface"><div className="flex flex-wrap items-start justify-between gap-5"><div><div className="eyebrow">Operational observability</div><h1 className="mt-2 text-2xl font-semibold tracking-tight text-main">Runs & traces</h1><p className="mt-2 max-w-2xl text-sm leading-6 text-muted">Start with a recorded run, then open its bounded investigation detail. This registry is an evidence snapshot, not live telemetry.</p></div><Badge tone="info"><span className="inline-flex items-center gap-1.5"><Activity size={13} aria-hidden="true" />{registry.length} available runs</span></Badge></div></section>
+    <section className="release-hero surface"><div className="flex flex-wrap items-start justify-between gap-5"><div><div className="eyebrow">{zh("Operational observability")}</div><h1 className="mt-2 text-2xl font-semibold tracking-tight text-main">{zh("Runs & traces")}</h1><p className="mt-2 max-w-2xl text-sm leading-6 text-muted">{zh("Start with a recorded run, then open its bounded investigation detail. This registry is an evidence snapshot, not live telemetry.")}</p></div><Badge tone="info"><span className="inline-flex items-center gap-1.5"><Activity size={13} aria-hidden="true" />{zh(registry.length)}{" " + zhFragment("available runs") + ""}</span></Badge></div></section>
 
-    <Card as="section" className="p-5"><SectionHeader eyebrow="Recorded evidence" title="Run registry" description="Deterministic scenarios and observed projections share one investigation workflow." action={<Badge tone="neutral">Evidence snapshot</Badge>} />
-      {loading ? <EmptyState title="Loading evidence snapshot..." description="Collecting bounded run projections for the operator registry." icon={Clock3} /> : error ? <EmptyState title="Investigation evidence unavailable" description={error} icon={Database} action={onOpenPlayground && <button type="button" className="operator-action" onClick={onOpenPlayground}><FlaskConical size={13} aria-hidden="true" />Open Agent Playground</button>} /> : registry.length === 0 ? <EmptyState title="No recorded investigations available" description="Choose a scenario or submit a controlled request to create an investigation projection." icon={GitBranch} action={onOpenPlayground && <button type="button" className="operator-action" onClick={onOpenPlayground}><FlaskConical size={13} aria-hidden="true" />Submit a scenario</button>} /> : <>
-        <div className="trace-filter-bar mt-4"><FilterSelect label="Status" value={statusFilter} onChange={setStatusFilter} options={[["all", "All statuses"], ["completed", "Completed"], ["waiting_confirmation", "Awaiting confirmation"], ["blocked", "Prevented"]]} /><FilterSelect label="Decision" value={decisionFilter} onChange={setDecisionFilter} options={[["all", "All decisions"], ["require_confirmation", "Require confirmation"], ["deny", "Prevented"], ["clarification_required", "Clarification required"]]} /><FilterSelect label="Scenario" value={scenarioFilter} onChange={setScenarioFilter} options={[["all", "All scenarios"], ["refund-request", "Refund request"], ["prompt-injection", "Prompt injection"], ["duplicate-operation", "Duplicate operation"], ["missing-information", "Missing information"]]} /><span className="trace-filter-note">Filters apply to deterministic evidence snapshots.</span></div><div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] text-muted"><Badge tone="neutral">Evidence snapshot</Badge><span>Deterministic scenario evidence</span><span className="text-border">·</span><Badge tone="info">Operator projection</Badge><span>Returned by the operator API</span></div>
-        <div className="trace-registry-table mt-4 hidden overflow-x-auto rounded-lg border border-border md:block"><table className="min-w-[1280px] w-full text-left"><thead className="bg-void/45 text-[10px] uppercase tracking-[.12em] text-muted"><tr><th className="px-4 py-3 font-medium">Run ID</th><th className="px-4 py-3 font-medium">Scenario</th><th className="px-4 py-3 font-medium">Intent</th><th className="px-4 py-3 font-medium">Status</th><th className="px-4 py-3 font-medium">Decision</th><th className="px-4 py-3 font-medium">Execution</th><th className="px-4 py-3 font-medium">Authority</th><th className="px-4 py-3 font-medium">Duration</th><th className="px-4 py-3 font-medium">Timestamp</th><th className="px-4 py-3 font-medium">Trace</th></tr></thead><tbody className="divide-y divide-border/70">{registry.map((run) => <RegistryRow key={run.run_id} run={run} onSelect={onSelect} />)}</tbody></table></div>
+    <Card as="section" className="p-5"><SectionHeader eyebrow={zh("Recorded evidence")} title={zh("Run registry")} description={zh("Deterministic scenarios and observed projections share one investigation workflow.")} action={<Badge tone="neutral">{zh("Evidence snapshot")}</Badge>} />
+      {loading ? <EmptyState title={zh("Loading evidence snapshot...")} description={zh("Collecting bounded run projections for the operator registry.")} icon={Clock3} /> : error ? <EmptyState title={zh("Investigation evidence unavailable")} description={error} icon={Database} action={onOpenPlayground && <button type="button" className="operator-action" onClick={onOpenPlayground}><FlaskConical size={13} aria-hidden="true" />{zh("Open Agent Playground")}</button>} /> : registry.length === 0 ? <EmptyState title={zh("No recorded investigations available")} description={zh("Choose a scenario or submit a controlled request to create an investigation projection.")} icon={GitBranch} action={onOpenPlayground && <button type="button" className="operator-action" onClick={onOpenPlayground}><FlaskConical size={13} aria-hidden="true" />{zh("Submit a scenario")}</button>} /> : <>
+        <div className="trace-filter-bar mt-4"><FilterSelect label={zh("Status")} value={statusFilter} onChange={setStatusFilter} options={[["all", "All statuses"], ["completed", "Completed"], ["waiting_confirmation", "Awaiting confirmation"], ["blocked", "Prevented"]]} /><FilterSelect label={zh("Decision")} value={decisionFilter} onChange={setDecisionFilter} options={[["all", "All decisions"], ["require_confirmation", "Require confirmation"], ["deny", "Prevented"], ["clarification_required", "Clarification required"]]} /><FilterSelect label={zh("Scenario")} value={scenarioFilter} onChange={setScenarioFilter} options={[["all", "All scenarios"], ["refund-request", "Refund request"], ["prompt-injection", "Prompt injection"], ["duplicate-operation", "Duplicate operation"], ["missing-information", "Missing information"]]} /><span className="trace-filter-note">{zh("Filters apply to deterministic evidence snapshots.")}</span></div><div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] text-muted"><Badge tone="neutral">{zh("Evidence snapshot")}</Badge><span>{zh("Deterministic scenario evidence")}</span><span className="text-border">·</span><Badge tone="info">{zh("Operator projection")}</Badge><span>{zh("Returned by the operator API")}</span></div>
+        <div className="trace-registry-table mt-4 hidden overflow-x-auto rounded-lg border border-border md:block"><table className="min-w-[1280px] w-full text-left"><thead className="bg-void/45 text-[10px] uppercase tracking-[.12em] text-muted"><tr><th className="px-4 py-3 font-medium">{zh("Run ID")}</th><th className="px-4 py-3 font-medium">{zh("Scenario")}</th><th className="px-4 py-3 font-medium">{zh("Intent")}</th><th className="px-4 py-3 font-medium">{zh("Status")}</th><th className="px-4 py-3 font-medium">{zh("Decision")}</th><th className="px-4 py-3 font-medium">{zh("Execution")}</th><th className="px-4 py-3 font-medium">{zh("Authority")}</th><th className="px-4 py-3 font-medium">{zh("Duration")}</th><th className="px-4 py-3 font-medium">{zh("Timestamp")}</th><th className="px-4 py-3 font-medium">{zh("Trace")}</th></tr></thead><tbody className="divide-y divide-border/70">{registry.map((run) => <RegistryRow key={run.run_id} run={run} onSelect={onSelect} />)}</tbody></table></div>
         <div className="mt-4 space-y-3 md:hidden">{registry.map((run) => <RegistryCard key={run.run_id} run={run} onSelect={onSelect} />)}</div>
       </>}
     </Card>
 
-    <Card as="section" className="p-5"><SectionHeader eyebrow="Playground history" title="Recent Playground Runs" description="Runs submitted in this browser session. Selecting one opens the same read-only investigation surface." />{playgroundRuns.length === 0 ? <EmptyState title="No playground runs" description="Choose a business or safety scenario to create a real run projection." icon={FlaskConical} action={onOpenPlayground && <button type="button" className="operator-action" onClick={onOpenPlayground}><FlaskConical size={13} aria-hidden="true" />Open Agent Playground</button>} /> : <div className="space-y-2">{playgroundRuns.map((item) => <button type="button" className="trace-run-card w-full text-left" key={item.run.run_id} onClick={() => onSelect(item.run)}><div className="flex flex-wrap items-center justify-between gap-3"><div className="flex items-center gap-2"><span className="font-mono text-xs text-main">{item.run.run_id.slice(0, 16)}</span><Badge tone="info">{item.scenario}</Badge></div><RunStatus run={item.run} /></div><div className="mt-3 grid gap-3 sm:grid-cols-4"><div><div className="field-label">Scenario</div><div className="mt-1 truncate text-xs text-main">{item.scenario}</div></div><div><div className="field-label">Decision</div><div className="mt-1 truncate text-xs capitalize text-main">{policyOutcome(item.run)}</div></div><div><div className="field-label">Execution</div><div className="mt-1 truncate text-xs capitalize text-muted">{executionOutcome(item.run)}</div></div><div><div className="field-label">Trace</div><div className="mt-1"><TraceAvailability run={item.run} /></div></div></div></button>)}</div>}</Card>
+    <Card as="section" className="p-5"><SectionHeader eyebrow={zh("Playground history")} title={zh("Recent Playground Runs")} description={zh("Runs submitted in this browser session. Selecting one opens the same read-only investigation surface.")} />{playgroundRuns.length === 0 ? <EmptyState title={zh("No playground runs")} description={zh("Choose a business or safety scenario to create a real run projection.")} icon={FlaskConical} action={onOpenPlayground && <button type="button" className="operator-action" onClick={onOpenPlayground}><FlaskConical size={13} aria-hidden="true" />{zh("Open Agent Playground")}</button>} /> : <div className="space-y-2">{playgroundRuns.map((item) => <button type="button" className="trace-run-card w-full text-left" key={item.run.run_id} onClick={() => onSelect(item.run)}><div className="flex flex-wrap items-center justify-between gap-3"><div className="flex items-center gap-2"><span className="font-mono text-xs text-main">{zh(item.run.run_id.slice(0, 16))}</span><Badge tone="info">{zh(item.scenario)}</Badge></div><RunStatus run={item.run} /></div><div className="mt-3 grid gap-3 sm:grid-cols-4"><div><div className="field-label">{zh("Scenario")}</div><div className="mt-1 truncate text-xs text-main">{zh(item.scenario)}</div></div><div><div className="field-label">{zh("Decision")}</div><div className="mt-1 truncate text-xs capitalize text-main">{zh(policyOutcome(item.run))}</div></div><div><div className="field-label">{zh("Execution")}</div><div className="mt-1 truncate text-xs capitalize text-muted">{zh(executionOutcome(item.run))}</div></div><div><div className="field-label">{zh("Trace")}</div><div className="mt-1"><TraceAvailability run={item.run} /></div></div></div></button>)}</div>}</Card>
   </div>;
 }

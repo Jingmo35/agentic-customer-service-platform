@@ -37,15 +37,15 @@ describe("MemoryPanel", () => {
     expect(html).toContain("response_style");
     expect(html).toContain("user explicit");
     expect(html).toContain("2027-01-20T00:00:00.000Z");
-    expect(html).toContain("Memory content is intentionally hidden");
-    expect(html).toContain("Decision impact");
-    expect(html).toContain("context only");
-    expect(html).toContain("No impact");
-    expect(html).toContain("Memory role");
-    expect(html).toContain("Context enrichment only");
-    expect(html).toContain("CUSTOMER STATE");
-    expect(html).toContain("Customer preference enrichment");
-    expect(html).toContain("Context assembly");
+    expect(html).toContain("记忆可补充上下文，但不能授权操作或绕过校验与确认。操作员视图投影中不公开记忆内容。");
+    expect(html).toContain("决策影响");
+    expect(html).toContain("仅用于上下文");
+    expect(html).toContain("无影响");
+    expect(html).toContain("记忆作用");
+    expect(html).toContain("仅补充上下文");
+    expect(html).toContain("客户状态");
+    expect(html).toContain("客户偏好补充");
+    expect(html).toContain("上下文组装");
     expect(html).not.toContain("PRIVATE_MEMORY_SENTINEL_DO_NOT_EXPOSE");
   });
 
@@ -54,6 +54,6 @@ describe("MemoryPanel", () => {
       <MemoryPanel usage={{ item_count: 0, keys: [], types: [] }} records={[]} embedded />,
     );
 
-    expect(html).toContain("No persistent memory found");
+    expect(html).toContain("未找到持久化记忆");
   });
 });

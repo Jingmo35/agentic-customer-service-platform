@@ -1,3 +1,4 @@
+import { zh, zhFragment } from "../i18n";
 import { Brain } from "lucide-react";
 import type { MemoryRecord, MemoryUsage } from "../types";
 import { Badge, EmptyState, Panel, SectionHeader, StatusIndicator } from "./ui";
@@ -38,36 +39,33 @@ export function MemoryPanel({
     <>
       <div className="notice notice-info">
         <Brain size={15} aria-hidden="true" />
-        <span>
-          Memory can enrich context but cannot authorize actions or bypass validation and
-          confirmation. Memory content is intentionally hidden from the operator projection.
-        </span>
+        <span>{zh("Memory can enrich context but cannot authorize actions or bypass validation and confirmation. Memory content is intentionally hidden from the operator projection.")}</span>
       </div>
       <div className="mt-4">
         <div className="context-role-header">
           <div className="flex flex-wrap items-center gap-2">
-            <div className="eyebrow">Memory context</div>
-            <Badge tone="info">CUSTOMER STATE</Badge>
+            <div className="eyebrow">{zh("Memory context")}</div>
+            <Badge tone="info">{zh("CUSTOMER STATE")}</Badge>
           </div>
-          <p className="mt-1 text-xs leading-5 text-muted">User-specific preferences and bounded context for contextual continuity.</p>
-          <div className="mt-2 text-[11px] text-muted">{retrievedCount} item{retrievedCount === 1 ? "" : "s"} used in run</div>
+          <p className="mt-1 text-xs leading-5 text-muted">{zh("User-specific preferences and bounded context for contextual continuity.")}</p>
+          <div className="mt-2 text-[11px] text-muted">{zh(retrievedCount)}{" " + zhFragment("item") + ""}{zh(retrievedCount === 1 ? "" : "s")}{" " + zhFragment("used in run") + ""}</div>
         </div>
         <div className="context-summary mt-3">
-          <div><span className="field-label">Retrieved</span><div className="mt-1 text-xs text-main">{retrieved ? `✓ ${retrievedCount}` : "Not used"}</div></div>
-          <div><span className="field-label">Why memory was loaded</span><div className="mt-1 text-xs text-main">{purpose}</div></div>
-          <div><span className="field-label">Used by</span><div className="mt-1 text-xs text-main">{retrieved ? "Context assembly" : "Not used"}</div></div>
-          <div><span className="field-label">Decision impact</span><div className="mt-1 text-xs capitalize text-main">{decisionImpact}</div></div>
-          <div><span className="field-label">Execution authority</span><div className="mt-1 text-xs text-main">{authorityImpact}</div></div>
+          <div><span className="field-label">{zh("Retrieved")}</span><div className="mt-1 text-xs text-main">{zh(retrieved ? (zhFragment("✓ ") + (zh(retrievedCount)) + zhFragment("")) : "Not used")}</div></div>
+          <div><span className="field-label">{zh("Why memory was loaded")}</span><div className="mt-1 text-xs text-main">{zh(purpose)}</div></div>
+          <div><span className="field-label">{zh("Used by")}</span><div className="mt-1 text-xs text-main">{zh(retrieved ? "Context assembly" : "Not used")}</div></div>
+          <div><span className="field-label">{zh("Decision impact")}</span><div className="mt-1 text-xs capitalize text-main">{zh(decisionImpact)}</div></div>
+          <div><span className="field-label">{zh("Execution authority")}</span><div className="mt-1 text-xs text-main">{zh(authorityImpact)}</div></div>
         </div>
         <div className="memory-role-card mt-3">
-          <div><span className="field-label">Memory role</span><div className="mt-1 text-sm font-medium text-main">Context enrichment only</div></div>
-          <div className="memory-role-grid mt-3"><div><span className="field-label">Used for</span><div className="mt-1 text-xs text-muted">Personalization · contextual continuity</div></div><div><span className="field-label">Not used for</span><div className="mt-1 text-xs text-muted">Authorization · policy override · execution authority · confirmation bypass</div></div></div>
+          <div><span className="field-label">{zh("Memory role")}</span><div className="mt-1 text-sm font-medium text-main">{zh("Context enrichment only")}</div></div>
+          <div className="memory-role-grid mt-3"><div><span className="field-label">{zh("Used for")}</span><div className="mt-1 text-xs text-muted">{zh("Personalization · contextual continuity")}</div></div><div><span className="field-label">{zh("Not used for")}</span><div className="mt-1 text-xs text-muted">{zh("Authorization · policy override · execution authority · confirmation bypass")}</div></div></div>
         </div>
-        <div className="context-summary mt-3"><div><span className="field-label">Retrieved keys</span><div className="mt-1 text-xs text-main">{usage.keys.length ? usage.keys.join(" · ") : "Not recorded"}</div></div><div><span className="field-label">Context types</span><div className="mt-1 text-xs text-main">{usage.types.length ? usage.types.join(" · ") : "Not recorded"}</div></div><div><span className="field-label">Previous interactions</span><div className="mt-1 text-xs text-muted">Unavailable in current projection</div></div></div>
+        <div className="context-summary mt-3"><div><span className="field-label">{zh("Retrieved keys")}</span><div className="mt-1 text-xs text-main">{zh(usage.keys.length ? usage.keys.join(" · ") : "Not recorded")}</div></div><div><span className="field-label">{zh("Context types")}</span><div className="mt-1 text-xs text-main">{zh(usage.types.length ? usage.types.join(" · ") : "Not recorded")}</div></div><div><span className="field-label">{zh("Previous interactions")}</span><div className="mt-1 text-xs text-muted">{zh("Unavailable in current projection")}</div></div></div>
         {records.length === 0 ? (
           <EmptyState
-            title="No persistent memory found"
-            description="This customer has no visible active memory records."
+            title={zh("No persistent memory found")}
+            description={zh("This customer has no visible active memory records.")}
             icon={Brain}
           />
         ) : (
@@ -76,18 +74,17 @@ export function MemoryPanel({
               <div className="memory-row" key={record.id}>
                 <div>
                   <div className="text-sm font-medium text-main">
-                    {record.memory_type.replace(/_/g, " ")}
+                    {zh(record.memory_type.replace(/_/g, " "))}
                   </div>
                   <div className="mt-1 font-mono text-[11px] text-muted">
-                    {record.normalized_key}
+                    {zh(record.normalized_key)}
                   </div>
-                  <div className="mt-1 text-[11px] text-muted">Source · {record.source.replace(/_/g, " ")} · provenance recorded</div>
-                  <div className="mt-1 text-[11px] text-muted">
-                    Created {formatTimestamp(record.created_at)} · updated{" "}
-                    {formatTimestamp(record.updated_at)} · expires {formatTimestamp(record.expires_at)}
+                  <div className="mt-1 text-[11px] text-muted">{"" + zhFragment("Source ·") + " "}{zh(record.source.replace(/_/g, " "))}{" " + zhFragment("· provenance recorded") + ""}</div>
+                  <div className="mt-1 text-[11px] text-muted">{zh("Created")}{zh(formatTimestamp(record.created_at))}{" " + zhFragment("· updated") + ""}{zh(" ")}
+                    {zh(formatTimestamp(record.updated_at))}{" " + zhFragment("· expires") + " "}{zh(formatTimestamp(record.expires_at))}
                   </div>
                 </div>
-                <StatusIndicator label={record.status} tone="success" compact />
+                <StatusIndicator label={zh(record.status)} tone="success" compact />
               </div>
             ))}
           </div>
@@ -96,14 +93,14 @@ export function MemoryPanel({
     </>
   );
   return embedded ? (
-    <div>{content}</div>
+    <div>{zh(content)}</div>
   ) : (
-    <Panel title="Customer memory" eyebrow="Contextual evidence">
+    <Panel title={zh("Customer memory")} eyebrow={zh("Contextual evidence")}>
       <SectionHeader
-        title="Personalization context"
-        description="Customer-scoped metadata approved by the memory policy."
+        title={zh("Personalization context")}
+        description={zh("Customer-scoped metadata approved by the memory policy.")}
       />
-      {content}
+      {zh(content)}
     </Panel>
   );
 }

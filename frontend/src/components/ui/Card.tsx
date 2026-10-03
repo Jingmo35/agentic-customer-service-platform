@@ -1,3 +1,4 @@
+import { zh } from "../../i18n";
 import type { ReactNode } from "react";
 
 type CardProps = {
@@ -17,8 +18,8 @@ export function Card({
 }: CardProps) {
   const Component = as;
   return (
-    <Component className={`surface ${className}`} aria-label={ariaLabel} data-testid={testId}>
-      {children}
+    <Component className={`surface ${className}`} aria-label={zh(ariaLabel)} data-testid={testId}>
+      {zh(children)}
     </Component>
   );
 }

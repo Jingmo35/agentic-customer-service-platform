@@ -1,3 +1,4 @@
+import { zh, zhFragment } from "../i18n";
 import { HeartPulse } from "lucide-react";
 import type { ComponentHealthStatus, Health } from "../types";
 import { Badge, StatusIndicator } from "./ui";
@@ -32,14 +33,14 @@ export function SystemHealthStrip({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2">
           <HeartPulse size={15} className="text-success" aria-hidden="true" />
-          <span className="text-sm font-medium text-main">System status</span>
-          <Badge tone={overallTone}>{overallLabel}</Badge>
+          <span className="text-sm font-medium text-main">{zh("System status")}</span>
+          <Badge tone={overallTone}>{zh(overallLabel)}</Badge>
         </div>
         <div className="flex flex-wrap gap-4">
           {(health?.components ?? []).map((component) => (
             <StatusIndicator
               key={component.name}
-              label={`${component.name} · ${component.status}`}
+              label={zh((zhFragment("") + (zh(component.name)) + zhFragment(" · ") + (zh(component.status)) + zhFragment("")))}
               tone={healthComponentTone(component.status)}
               compact
             />

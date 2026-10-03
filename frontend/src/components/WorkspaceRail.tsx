@@ -1,3 +1,4 @@
+import { zh, zhFragment } from "../i18n";
 import { Activity, Clock3, MessageSquare, ShieldAlert, UserRound } from "lucide-react";
 import type { AgentRun } from "../types";
 import { Badge, EmptyState, StatusIndicator } from "./ui";
@@ -18,16 +19,16 @@ function runStatus(status: string): { label: string; tone: "success" | "warning"
 
 export function WorkspaceRail({ runs, selectedRunId, currentConversationId, onSelect }: Props) {
   return (
-    <aside className="workspace-rail surface" aria-label="Conversation list">
+    <aside className="workspace-rail surface" aria-label={zh("Conversation list")}>
       <div className="border-b border-border p-4">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <div className="eyebrow">Operator queue</div>
-            <h2 className="section-title mt-1">Conversations</h2>
+            <div className="eyebrow">{zh("Operator queue")}</div>
+            <h2 className="section-title mt-1">{zh("Conversations")}</h2>
           </div>
-          <Badge tone="neutral">{runs.length} recent</Badge>
+          <Badge tone="neutral">{zh(runs.length)}{" " + zhFragment("recent") + ""}</Badge>
         </div>
-        <p className="mt-2 text-xs leading-5 text-muted">Persisted run projections, not message history.</p>
+        <p className="mt-2 text-xs leading-5 text-muted">{zh("Persisted run projections, not message history.")}</p>
       </div>
       <div className="space-y-2 p-2">
         <div className="rail-session rounded-lg border border-info/30 bg-info/5 p-3" aria-current="true">
@@ -35,15 +36,15 @@ export function WorkspaceRail({ runs, selectedRunId, currentConversationId, onSe
             <div className="rail-icon rail-icon-active"><Activity size={14} aria-hidden="true" /></div>
             <div className="min-w-0 flex-1">
               <div className="flex items-center justify-between gap-2">
-                <span className="truncate text-xs font-semibold text-main">Current workspace</span>
-                <StatusIndicator label="Active" tone="success" compact />
+                <span className="truncate text-xs font-semibold text-main">{zh("Current workspace")}</span>
+                <StatusIndicator label={zh("Active")} tone="success" compact />
               </div>
-              <div className="mt-1 truncate font-mono text-[10px] text-muted">{currentConversationId}</div>
+              <div className="mt-1 truncate font-mono text-[10px] text-muted">{zh(currentConversationId)}</div>
             </div>
           </div>
         </div>
         {runs.length === 0 ? (
-          <EmptyState title="No persisted runs" description="A completed request will appear here with its bounded operator metadata." icon={MessageSquare} />
+          <EmptyState title={zh("No persisted runs")} description={zh("A completed request will appear here with its bounded operator metadata.")} icon={MessageSquare} />
         ) : runs.map((run) => {
           const status = runStatus(run.status);
           const selected = run.run_id === selectedRunId;
@@ -59,13 +60,13 @@ export function WorkspaceRail({ runs, selectedRunId, currentConversationId, onSe
                 <div className="rail-icon"><UserRound size={14} aria-hidden="true" /></div>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-start justify-between gap-2">
-                    <span className="truncate text-xs font-semibold text-main">Customer #{run.customer_id}</span>
-                    <span className="shrink-0 text-[10px] text-muted">{new Date(run.started_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
+                    <span className="truncate text-xs font-semibold text-main">{zh("Customer #")}{zh(run.customer_id)}</span>
+                    <span className="shrink-0 text-[10px] text-muted">{zh(new Date(run.started_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }))}</span>
                   </div>
-                  <div className="mt-1 truncate font-mono text-[10px] text-muted">{run.conversation_id}</div>
+                  <div className="mt-1 truncate font-mono text-[10px] text-muted">{zh(run.conversation_id)}</div>
                   <div className="mt-2 flex items-center justify-between gap-2">
-                    <span className="truncate text-[11px] text-muted">{run.intent || "Intent not recorded"}</span>
-                    <StatusIndicator label={status.label} tone={status.tone} compact />
+                    <span className="truncate text-[11px] text-muted">{zh(run.intent || "Intent not recorded")}</span>
+                    <StatusIndicator label={zh(status.label)} tone={status.tone} compact />
                   </div>
                 </div>
               </div>
@@ -74,8 +75,8 @@ export function WorkspaceRail({ runs, selectedRunId, currentConversationId, onSe
         })}
       </div>
       <div className="mt-auto border-t border-border p-4 text-[11px] leading-5 text-muted">
-        <div className="flex items-center gap-2"><Clock3 size={13} aria-hidden="true" /> bounded operational metadata</div>
-        <div className="mt-2 flex items-center gap-2"><ShieldAlert size={13} className="text-warning" aria-hidden="true" /> proposal ≠ authority</div>
+        <div className="flex items-center gap-2"><Clock3 size={13} aria-hidden="true" />{" " + zhFragment("bounded operational metadata") + ""}</div>
+        <div className="mt-2 flex items-center gap-2"><ShieldAlert size={13} className="text-warning" aria-hidden="true" />{" " + zhFragment("proposal ≠ authority") + ""}</div>
       </div>
     </aside>
   );

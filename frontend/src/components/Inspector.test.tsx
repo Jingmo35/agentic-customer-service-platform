@@ -5,7 +5,7 @@ import { Badge } from "./Badge";
 describe("operator console components", () => {
   it("renders a bounded status badge", () => {
     const html = renderToStaticMarkup(<Badge tone="mint">Healthy</Badge>);
-    expect(html).toContain("Healthy");
+    expect(html).toContain("正常");
     expect(html).toContain("badge-success");
   });
 });

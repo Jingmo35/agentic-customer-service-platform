@@ -1,5 +1,7 @@
 # Agentic Customer Service Platform
 
+**中文资料与学习路线：** [docs/zh-CN](docs/zh-CN/README.md) · [简历与贡献边界](docs/zh-CN/resume.md)
+
 **A production-oriented Agentic AI Control Plane for reliable customer-support workflows.**
 
 This reference implementation answers knowledge questions and performs controlled actions such as order lookup, refunds, cancellations, ticket creation, and human escalation.

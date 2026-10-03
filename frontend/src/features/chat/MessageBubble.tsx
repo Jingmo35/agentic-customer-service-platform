@@ -1,3 +1,4 @@
+import { zh } from "../../i18n";
 import { Bot, UserRound } from "lucide-react";
 import type { ReactNode } from "react";
 import { Badge } from "../../components/ui";
@@ -32,9 +33,9 @@ export function MessageBubble({ message }: { message: ChatMessage }): ReactNode 
         </span>
         <div className={`min-w-0 ${customer ? "" : "text-right"}`}>
           <div className="mb-1 flex items-center gap-2 text-[11px] text-muted">
-            <span className="font-medium text-main">{customer ? "Customer" : "Agent"}</span>
-            <span>{formatTime(message.timestamp)}</span>
-            {!customer && message.state && <Badge tone={message.state === "awaiting confirmation" ? "warning" : "neutral"}>{message.state}</Badge>}
+            <span className="font-medium text-main">{zh(customer ? "Customer" : "Agent")}</span>
+            <span>{zh(formatTime(message.timestamp))}</span>
+            {!customer && message.state && <Badge tone={message.state === "awaiting confirmation" ? "warning" : "neutral"}>{zh(message.state)}</Badge>}
           </div>
           <div className={`rounded-xl border px-3.5 py-3 text-sm leading-6 ${customer ? "border-info/20 bg-info/5 text-main" : "border-success/20 bg-success/5 text-main"}`}>
             {message.content}

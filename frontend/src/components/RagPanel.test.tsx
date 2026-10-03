@@ -8,17 +8,17 @@ describe("RagPanel", () => {
     const notRecorded = renderToStaticMarkup(<RagPanel documents={[]} embedded />);
     const unavailable = renderToStaticMarkup(<RagPanel documents={[]} retrievalRecorded embedded />);
 
-    expect(notRecorded).toContain("No retrieval stage recorded");
-    expect(unavailable).toContain("Evidence unavailable from current projection");
-    expect(notRecorded).toContain("KNOWLEDGE RETRIEVAL");
+    expect(notRecorded).toContain("未记录检索阶段");
+    expect(unavailable).toContain("当前投影中没有可用证据");
+    expect(notRecorded).toContain("知识检索");
   });
 
   it("labels returned document metadata as retrieved evidence", () => {
     const html = renderToStaticMarkup(<RagPanel documents={[{ citation_id: "ref-1", title: "Refund policy", section: "Eligibility", source: "policy", score: 0.91 }]} embedded />);
 
-    expect(html).toContain("Evidence retrieved");
-    expect(html).toContain("KNOWLEDGE RETRIEVAL");
-    expect(html).toContain("Refund policy");
+    expect(html).toContain("已检索证据");
+    expect(html).toContain("知识检索");
+    expect(html).toContain("退款政策");
   });
 
   it("shows bounded grounded-answer metrics without exposing claim text", () => {
@@ -30,10 +30,10 @@ describe("RagPanel", () => {
       />,
     );
 
-    expect(html).toContain("Grounded answer validation");
-    expect(html).toContain("Sources used");
-    expect(html).toContain("Unsupported claims");
+    expect(html).toContain("有依据回答校验");
+    expect(html).toContain("已使用来源");
+    expect(html).toContain("缺少依据的断言");
     expect(html).toContain("91%");
-    expect(html).not.toContain("hidden reasoning");
+    expect(html).not.toContain("无隐藏推理 · 无模型 Token");
   });
 });

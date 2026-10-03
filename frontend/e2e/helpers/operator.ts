@@ -16,8 +16,8 @@ export type AgentChatProjection = {
 
 export async function loginOperator(page: Page, path = "/overview"): Promise<void> {
   await page.goto(path);
-  await expect(page.getByText("AGENTIC OPS")).toBeVisible();
-  await expect(page.getByText("Authenticated", { exact: true })).toBeVisible();
+  await expect(page.getByText("AGENT 运维")).toBeVisible();
+  await expect(page.getByText("已认证", { exact: true })).toBeVisible();
 }
 
 export async function openScenario(page: Page, scenario: string, focus?: string): Promise<void> {
@@ -44,13 +44,13 @@ export async function submitWorkspaceMessage(
 }
 
 export async function waitForRunCompletion(page: Page): Promise<void> {
-  await expect(page.getByText("Generating bounded response…")).toHaveCount(0);
+  await expect(page.getByText("正在生成限定范围的回复…")).toHaveCount(0);
   await expect(page.getByTestId("agent-message")).toBeEnabled();
 }
 
 export async function assertEvidenceVisible(page: Page): Promise<void> {
   await expect(page.getByTestId("evidence-panel")).toBeVisible();
-  await expect(page.getByTestId("model-proposal")).toContainText("LLM proposal");
+  await expect(page.getByTestId("model-proposal")).toContainText("LLM 建议");
 }
 
 export async function assertNoExecution(page: Page): Promise<void> {
@@ -59,7 +59,7 @@ export async function assertNoExecution(page: Page): Promise<void> {
 
 export async function assertDecisionBoundary(page: Page): Promise<void> {
   await expect(page.getByTestId("decision-boundary")).toBeVisible();
-  await expect(page.getByTestId("decision-boundary")).toContainText("Deterministic decision");
+  await expect(page.getByTestId("decision-boundary")).toContainText("确定性决策");
 }
 
 export async function captureJourney(page: Page, filename: string): Promise<void> {

@@ -7,7 +7,7 @@ describe("system health projection", () => {
     const html = renderToStaticMarkup(
       <SystemHealthStrip health={null} apiReachability="unavailable" />,
     );
-    expect(html).toContain("API unreachable");
+    expect(html).toContain("无法连接 API");
     expect(html).not.toContain("API connected");
   });
 
@@ -29,10 +29,10 @@ describe("system health projection", () => {
         }}
       />,
     );
-    expect(html).toContain("not ready");
-    expect(html).toContain("retriever · unavailable");
-    expect(html).toContain("llm · not_probed");
-    expect(html).not.toContain(">healthy<");
+    expect(html).toContain("未就绪");
+    expect(html).toContain("检索器 · 不可用");
+    expect(html).toContain("LLM · 未探测");
+    expect(html).not.toContain(">正常<");
   });
 
   it("renders a ready backend only after a successful health response", () => {
@@ -42,6 +42,6 @@ describe("system health projection", () => {
         health={{ status: "ready", components: [] }}
       />,
     );
-    expect(html).toContain(">ready<");
+    expect(html).toContain(">就绪<");
   });
 });

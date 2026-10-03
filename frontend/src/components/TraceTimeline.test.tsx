@@ -51,12 +51,12 @@ describe("agent trace projection", () => {
 
   it("keeps absent evidence explicit", () => {
     const html = renderToStaticMarkup(<TraceTimeline events={run.trace} run={run} embedded />);
-    expect(html).toContain("No retrieval stage recorded");
-    expect(html).toContain("Semantic grounding");
-    expect(html).toContain("Context");
-    expect(html).toContain("Decision");
-    expect(html).toContain("Authority");
-    expect(html).toContain("waiting");
+    expect(html).toContain("未记录检索阶段");
+    expect(html).toContain("语义依据校验");
+    expect(html).toContain("上下文");
+    expect(html).toContain("决策");
+    expect(html).toContain("权限");
+    expect(html).toContain("等待中");
   });
 
   it("renders bounded memory influence metadata when present", () => {
@@ -86,16 +86,16 @@ describe("agent trace projection", () => {
       ],
     };
     const html = renderToStaticMarkup(<TraceTimeline events={memoryRun.trace} run={memoryRun} embedded />);
-    expect(html).toContain("Memory context");
-    expect(html).toContain("Customer state");
-    expect(html).toContain("Knowledge retrieval");
-    expect(html).toContain("items used: 1");
-    expect(html).toContain("role: context enrichment");
+    expect(html).toContain("记忆上下文");
+    expect(html).toContain("客户状态");
+    expect(html).toContain("知识检索");
+    expect(html).toContain("使用条目数: 1");
+    expect(html).toContain("角色: 补充上下文");
   });
 
   it("presents human-readable event names before technical keys", () => {
     const html = renderToStaticMarkup(<TraceTimeline events={run.trace} run={run} embedded />);
-    expect(html).toContain("Intent detection");
+    expect(html).toContain("意图识别");
     expect(html).toContain("understand_request");
     expect(html.indexOf("Intent detection")).toBeLessThan(html.indexOf("understand_request"));
   });
@@ -126,7 +126,7 @@ describe("agent trace projection", () => {
     const html = renderToStaticMarkup(
       <TraceTimeline events={transitionRun.trace} run={transitionRun} embedded />,
     );
-    expect(html).toContain("Workflow transition");
+    expect(html).toContain("工作流转换");
     expect(html).toContain("Workflow Superseded");
     expect(html).toContain("explicit replacement");
   });
@@ -137,6 +137,6 @@ describe("agent trace projection", () => {
       security_signal: "instruction_override_attempt",
     };
     const html = renderToStaticMarkup(<TraceTimeline events={securityRun.trace} run={securityRun} embedded />);
-    expect(html).not.toContain("Intent detection");
+    expect(html).not.toContain("意图识别");
   });
 });

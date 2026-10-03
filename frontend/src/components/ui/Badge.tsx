@@ -1,3 +1,4 @@
+import { zh } from "../../i18n";
 import type { ReactNode } from "react";
 
 export type BadgeTone = "success" | "warning" | "danger" | "info" | "neutral" | "mint" | "amber" | "slate" | "red";
@@ -7,5 +8,5 @@ const tones: Record<BadgeTone, string> = {
 };
 
 export function Badge({ children, tone = "neutral" }: { children: ReactNode; tone?: BadgeTone }) {
-  return <span className={`badge ${tones[tone]}`}>{children}</span>;
+  return <span className={`badge ${tones[tone]}`}>{zh(children)}</span>;
 }

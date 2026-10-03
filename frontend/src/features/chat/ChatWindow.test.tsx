@@ -30,11 +30,11 @@ const response = (overrides: Partial<AgentResponse> = {}): AgentResponse => ({
 describe("unified chat experience", () => {
   it("renders customer conversation, activity timeline, and runtime details", () => {
     const html = renderToStaticMarkup(<ChatWindow />);
-    expect(html).toContain("Customer conversation + agent observability");
-    expect(html).toContain("Agent timeline");
-    expect(html).toContain("Runtime details");
-    expect(html).toContain("Send");
-    expect(html).toContain("No prompts or hidden reasoning are shown");
+    expect(html).toContain("客户对话与 Agent 可观测性");
+    expect(html).toContain("Agent 时间线");
+    expect(html).toContain("运行时详情");
+    expect(html).toContain("发送");
+    expect(html).toContain("现有 Agent 接口返回的用户可见消息，不显示提示词或隐藏推理。");
   });
 
   it("maps bounded agent response states without exposing reasoning", () => {
